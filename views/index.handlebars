@@ -1,5 +1,9 @@
 
-<div class="jumbotron">Scrape Some News!</div>
+<div class="jumbotron">
+	<h1>Scrape Some News!</h1>
+	<button class="btn btn-primary" id="scrape">Scrape that news!</button>
+
+</div>
 
 
 <div class="container">
@@ -8,9 +12,19 @@
 				<h2 class="text-center">Current News</h2>
 		
 				{{#each headline}}
-							{{title}}<br>
-							<a href={{link}}>{{link}}<a><br>
-							{{summary}}<br><br>
+					<div class="card">
+						<div class="card-header">
+							<a href={{link}}>{{title}}</a>
+						</div>
+						<div class="card-body">
+							{{summary}}<br>
+							<button class="btn btn-danger" id="save">Save</button>
+							<button class="btn btn-warning id="comment">Comment</button> 
+						</div>	
+
+
+					</div>		
+					<br>
 				{{/each}}
 
 		</div>
