@@ -1,0 +1,20 @@
+
+<div class="jumbotron">Scrape Some News!</div>
+
+
+<div class="container">
+	<div class="row" id="lists">
+		<div class="col-md-12" id="headlines">
+				<h2 class="text-center">Current News</h2>
+		
+				{{#each headline}}
+							{{title}}<br>
+							<a href={{link}}>{{link}}<a><br>
+							{{summary}}<br><br>
+				{{/each}}
+
+		</div>
+	</div>
+
+</div>	
+
