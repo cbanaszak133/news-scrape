@@ -50,4 +50,28 @@ router.get("/", function(req, res) {
 		});
 });
 
+router.get("/comments/:id", function(req, res) {
+	db.Headline.findOne({'_id':req.params.id})
+		.populate('notes')
+		.then(function(dbHeadline) {
+			res.json(dbHeadline);
+		})
+		.catch(function(err) {
+			res.json(err);
+		})		
+});
+
+router.post("/comments/:id", function(req, res) {
+	db.Note.create(req.body)
+		.then(function(dbNote) {
+			return db.Headline.findOneAndUpdate({"_id": req.params.id}, { $push: { notes: dbNote._id } }, { new: true });
+		})
+	    .then(function(dbHeadline) {
+	      res.json(dbHeadline);
+	    })
+	    .catch(function(err) {	      
+	      res.json(err);
+	    })	
+});
+
 module.exports = router;
