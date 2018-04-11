@@ -15,33 +15,37 @@ $(function(){
 		console.log(id);
 		console.log('hi!');
 		$('.comment-list').empty();
+		getComments(id);
 
-		$.ajax({
-			type: "GET",
-			url: "/comments/" + id
-		})
-			.then(function(data) {
-				console.log(data);
-				$(".modal-title").text('Comments for article: ' + data._id);
-				$("div.modal-footer").attr('id',data._id);
-				var comments = data.notes;
-				console.log(comments);
+		// $.ajax({
+		// 	type: "GET",
+		// 	url: "/comments/" + id
+		// })
+		// 	.then(function(data) {
+		// 		console.log(data);
+		// 		$(".modal-title").text('Comments for article: ' + data._id);
+		// 		$("div.modal-footer").attr('id',data._id);
+		// 		var comments = data.notes;
+		// 		console.log(comments);
+		// 		//writeComments(comments);
 
-				comments.forEach(function(note) {
-					var newCom = $("<li>");
-					newCom.attr('id', note._id)
-					var deleteButton = $("<button>");
-					deleteButton.text("Delete Comment");
+		// 		comments.forEach(function(note) {
+		// 			var newCom = $("<li>");
+		// 			newCom.attr('id', note._id)
+		// 			var deleteButton = $("<button>");
+		// 			deleteButton.text("Delete Comment");
 
-					deleteButton.addClass("btn-danger");
-					newCom.text(note.body);
-					newCom.append(deleteButton)
+		// 			deleteButton.addClass("btn-danger");
+		// 			newCom.text(note.body);
+		// 			newCom.append(deleteButton)
 
-					$(".comment-list").append(newCom);
-				});
+		// 			$(".comment-list").append(newCom);
+		// 		});
 
-				$('.modal').modal('show');
-			});
+				
+		// 	});
+
+		$('.modal').modal('show');
 	});
 
 	$(".comment").on('click', function(event) {
@@ -62,11 +66,59 @@ $(function(){
 			.then(function(data) {
 				console.log(data);
 				$("#commentText").val('');
+				getComments(id);
 
 			});
 
 	});
 
+	function getComments(id){
+		$('.comment-list').empty();
+		$.ajax({
+			type: "GET",
+			url: "/comments/" + id
+		})
+			.then(function(data) {
+				console.log(data);
+				$(".modal-title").text('Comments for article: ' + data._id);
+				$("div.modal-footer").attr('id',data._id);
+				var comments = data.notes;
+				console.log(comments);
+				//writeComments(comments);
+
+				comments.forEach(function(note) {
+					var newCom = $("<li>");
+					newCom.attr('id', note._id)
+					var deleteButton = $("<button>");
+					deleteButton.text("Delete Comment");
+
+					deleteButton.addClass("deleteBtn");
+					newCom.text(note.body);
+					newCom.append(deleteButton)
+
+					$(".comment-list").append(newCom);
+				});
+
+				
+			});
+
+	}
+
+	$(document).on("click", ".deleteBtn", function(event) {
+		console.log("I'm here!");
+		var commentId = $(this).parent().attr('id');
+
+		$.ajax({
+			type: "DELETE",
+			url: "/comments/" + commentId
+		})
+			.then(function(data) { 
+				console.log(data);
+				var headlineId = $('div.modal-footer').attr('id');
+				console.log(headlineId);
+				getComments(headlineId);
+			});
+	});
 
 });
 
