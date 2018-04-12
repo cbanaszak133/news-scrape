@@ -1,5 +1,5 @@
 {
-  "name": "news-scrapper",
+  "name": "news-scrape",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cbanaszak133/news-scrapper.git"
+    "url": "git+https://github.com/cbanaszak133/news-scrape.git"
   },
   "author": "Chris Banaszak",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/cbanaszak133/news-scrapper/issues"
+    "url": "https://github.com/cbanaszak133/news-scrape/issues"
   },
-  "homepage": "https://github.com/cbanaszak133/news-scrapper#readme",
+  "homepage": "https://github.com/cbanaszak133/news-scrape#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
     "cheerio": "^1.0.0-rc.2",
