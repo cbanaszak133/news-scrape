@@ -1,0 +1,14 @@
+.jumbotron {
+	text-align:center;
+}
+
+.deleteBtn {
+	margin-left: 30px;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+li {
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
