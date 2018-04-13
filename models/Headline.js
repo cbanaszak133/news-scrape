@@ -22,6 +22,11 @@ var HeadlineSchema = new Schema({
     required: true
   },
 
+  saved: {
+    type: Boolean,
+    default: false
+  },
+
   notes: [
     {
       type: Schema.Types.ObjectId,

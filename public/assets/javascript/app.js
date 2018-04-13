@@ -4,46 +4,27 @@ $(function(){
 				type: "GET"
 			}).then(
 				function(){
-					console.log("scraped some data");
 					location.reload();
 				});
 	});
 
+	//Next two methods are made to direct you to the
+	//home page or the saved page
+	$("#to-saved").on("click", function(event) {
+		window.history.pushState('obj', 'newtitle', '/saved');
+   		location.reload();
+	});
+
+	$("#return-home").on("click", function(event) {
+		window.history.pushState('obj', 'newtitle', '/');
+   		location.reload();
+	});
 
 	$(".comment-open").on("click", function() {
 		var id = $(this).parent().attr('id');
-		console.log(id);
-		console.log('hi!');
+
 		$('.comment-list').empty();
 		getComments(id);
-
-		// $.ajax({
-		// 	type: "GET",
-		// 	url: "/comments/" + id
-		// })
-		// 	.then(function(data) {
-		// 		console.log(data);
-		// 		$(".modal-title").text('Comments for article: ' + data._id);
-		// 		$("div.modal-footer").attr('id',data._id);
-		// 		var comments = data.notes;
-		// 		console.log(comments);
-		// 		//writeComments(comments);
-
-		// 		comments.forEach(function(note) {
-		// 			var newCom = $("<li>");
-		// 			newCom.attr('id', note._id)
-		// 			var deleteButton = $("<button>");
-		// 			deleteButton.text("Delete Comment");
-
-		// 			deleteButton.addClass("btn-danger");
-		// 			newCom.text(note.body);
-		// 			newCom.append(deleteButton)
-
-		// 			$(".comment-list").append(newCom);
-		// 		});
-
-				
-		// 	});
 
 		$('.modal').modal('show');
 	});
@@ -54,8 +35,6 @@ $(function(){
 		var text = $("textarea#commentText").val();
 		var id = $(this).parent().attr('id');
 
-		console.log(text);
-
 		$.ajax({
 			type: "POST",
 			url: "/comments/" + id,
@@ -64,7 +43,7 @@ $(function(){
 			}	
 		})
 			.then(function(data) {
-				console.log(data);
+
 				$("#commentText").val('');
 				getComments(id);
 
@@ -72,6 +51,9 @@ $(function(){
 
 	});
 
+	//Helper function to write comments
+	//on the modal when added, deleted, and when
+	//the modal opens
 	function getComments(id){
 		$('.comment-list').empty();
 		$.ajax({
@@ -79,12 +61,10 @@ $(function(){
 			url: "/comments/" + id
 		})
 			.then(function(data) {
-				console.log(data);
+
 				$(".modal-title").text('Comments for article: ' + data._id);
 				$("div.modal-footer").attr('id',data._id);
 				var comments = data.notes;
-				console.log(comments);
-				//writeComments(comments);
 
 				comments.forEach(function(note) {
 					var newCom = $("<li>");
@@ -104,8 +84,33 @@ $(function(){
 
 	}
 
+	//When save or unsave is clicked, change the 
+	//mondoDB value to either true or false
+	$(".save-article").on("click", function(event) {
+		var id = $(this).parent().attr('id');
+		$.ajax({
+			type: "PUT",
+			url: "/save/" + id
+		})
+			.then(function(data){
+				location.reload();
+			});
+
+	});
+
+	$(".unsave-article").on("click", function(event) {
+		var id = $(this).parent().attr('id');
+		$.ajax({
+			type: "PUT",
+			url: "/unsave/" + id
+		})
+			.then(function(data){
+				location.reload();
+		});
+
+	});
+
 	$(document).on("click", ".deleteBtn", function(event) {
-		console.log("I'm here!");
 		var commentId = $(this).parent().attr('id');
 
 		$.ajax({
@@ -113,9 +118,7 @@ $(function(){
 			url: "/comments/" + commentId
 		})
 			.then(function(data) { 
-				console.log(data);
 				var headlineId = $('div.modal-footer').attr('id');
-				console.log(headlineId);
 				getComments(headlineId);
 			});
 	});

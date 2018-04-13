@@ -3,10 +3,6 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
-//var axios = require("axios");
-//var cheerio = require("cheerio");
-
-//var db = require("./models");
 
 var PORT = (process.env.PORT || 3000);
 
@@ -22,6 +18,7 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 
+
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 // Set mongoose to leverage built in JavaScript ES6 Promises
@@ -29,10 +26,9 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI)
 
-//Need to add in web scrapper here 
-var routes = require("./controllers/mainController.js");
 
-app.use(routes);
+require('./controllers/mainController.js')(app);
+
 
 app.listen(PORT, function() {
   console.log("App running on port " + PORT + "!");

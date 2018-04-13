@@ -1,19 +1,18 @@
 
+
 <div class="jumbotron">
 	<h1>Scrape Some News!</h1>
-	<button class="btn btn-primary" id="scrape">Scrape that news!</button>
-	<button class="btn btn-success" id="to-saved">Saved Articles</button>
+	<button class="btn btn-primary" id="return-home">Go back home</button>
 
 </div>
-
 
 <div class="container">
 	<div class="row" id="lists">
 		<div class="col-md-12" id="headlines">
-				<h2 class="text-center">Current News</h2>
+				<h2 class="text-center">Saved Articles</h2>
 		
 				{{#each headline}}
-					{{#unless saved}}
+					
 						<div class="card">
 							<div class="card-header">
 								<a href={{link}}>{{title}}</a>
@@ -21,27 +20,11 @@
 							<div class="card-body" id={{_id}}>
 								{{summary}}<br>
 								<button class="btn btn-warning comment-open">Comment</button>
-								<button class="btn btn-success save-article">Save Article</button> 
+								<button class="btn btn-success unsave-article">Unsave Article</button> 
 							</div>	
 
 
 						</div>
-					{{/unless}}
-
-					{{#if saved}}		
-						<div class="card">
-							<div class="card-header">
-								<a href={{link}}>{{title}}</a>
-							</div>
-							<div class="card-body" id={{_id}}>
-								{{summary}}<br>
-								<button class="btn btn-warning comment-open">Comment</button> 
-								<button class="btn btn-success disabled">Saved</button>
-							</div>	
-
-
-						</div>
-					{{/if}}
 						
 					<br>
 
@@ -77,4 +60,3 @@
 
 
 </div>	
-
